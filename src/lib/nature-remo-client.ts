@@ -53,20 +53,6 @@ export class NatureRemoClient {
 }
 
 /**
- * 環境変数からAPIトークンを取得してクライアントを作成
- */
-export function createNatureRemoClient(): NatureRemoClient | null {
-  const apiToken = process.env.NEXT_PUBLIC_NATURE_REMO_API_TOKEN;
-  
-  if (!apiToken) {
-    console.warn('NEXT_PUBLIC_NATURE_REMO_API_TOKEN is not set');
-    return null;
-  }
-  
-  return new NatureRemoClient(apiToken);
-}
-
-/**
  * モックデータを生成（開発用）
  */
 export function generateMockRoomData(): RoomData[] {

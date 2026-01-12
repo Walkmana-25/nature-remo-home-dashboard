@@ -323,7 +323,8 @@ API トークンが未設定の場合、自動的にモックデータを生成:
 1. **API トークン管理**
    - 環境変数で管理（`.env`）
    - `.gitignore` で除外
-   - クライアントサイドで使用（`NEXT_PUBLIC_` プレフィックス）
+   - **サーバーサイドのみで使用**（`NATURE_REMO_API_TOKEN`）
+   - クライアントサイドには公開されない（Next.js API Routes経由でアクセス）
 
 2. **HTTPS 通信**
    - Nature Remo API は HTTPS のみ
@@ -331,6 +332,10 @@ API トークンが未設定の場合、自動的にモックデータを生成:
 3. **入力検証**
    - TypeScript による型チェック
    - API レスポンスの検証
+
+4. **アーキテクチャによるセキュリティ**
+   - クライアント → Next.js API Route (`/api/nature-remo`) → Nature Remo API
+   - APIトークンはサーバーサイドに留まり、ブラウザには送信されない
 
 ## パフォーマンス最適化
 

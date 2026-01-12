@@ -2,7 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { RoomData } from '@/types/nature-remo';
-import { createNatureRemoClient, generateMockRoomData } from '@/lib/nature-remo-client';
+import { generateMockRoomData } from '@/lib/nature-remo-client';
+
+// ポーリング間隔（5分 = 300,000ミリ秒）
+const POLLING_INTERVAL_MS = 5 * 60 * 1000;
 
 /**
  * Nature Remo データを取得するカスタムフック
@@ -19,18 +22,28 @@ export function useNatureRemoData() {
       setIsLoading(true);
       setError(null);
 
-      const client = createNatureRemoClient();
+      // サーバーサイドAPIルートを呼び出し
+      const response = await fetch('/api/nature-remo', {
+        cache: 'no-store',
+      });
       
-      if (client) {
-        // 実際のAPIからデータを取得
-        const devices = await client.getDevices();
-        const data = client.convertToRoomData(devices);
-        setRoomData(data);
-      } else {
-        // APIトークンが設定されていない場合はモックデータを使用
-        console.log('Using mock data (API token not configured)');
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status} ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data.useMock) {
+        // モックデータを使用
+        console.log('Using mock data (API token not configured or error occurred)');
+        if (data.error) {
+          setError(data.error);
+        }
         const mockData = generateMockRoomData();
         setRoomData(mockData);
+      } else {
+        // 実際のデータを使用
+        setRoomData(data.roomData);
       }
       
       setLastFetched(new Date());
@@ -53,7 +66,7 @@ export function useNatureRemoData() {
     // 5分ごとに自動更新
     const interval = setInterval(() => {
       fetchData();
-    }, 5 * 60 * 1000); // 5分 = 300,000ミリ秒
+    }, POLLING_INTERVAL_MS);
 
     return () => clearInterval(interval);
   }, [fetchData]);

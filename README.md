@@ -54,8 +54,12 @@ cp .env.example .env
 `.env` ファイルを編集:
 
 ```env
-NEXT_PUBLIC_NATURE_REMO_API_TOKEN=your_actual_api_token_here
+NATURE_REMO_API_TOKEN=your_actual_api_token_here
 ```
+
+**セキュリティ注意事項:**
+- APIトークンはサーバーサイドでのみ使用され、クライアントには公開されません
+- `.env` ファイルは `.gitignore` に含まれており、Gitにコミットされません
 
 **Nature Remo API トークンの取得方法:**
 1. [Nature Remo Home](https://home.nature.global/) にアクセス
@@ -126,7 +130,7 @@ GitHub Actions を使用した自動化:
 
 1. [Vercel](https://vercel.com) にサインアップ
 2. GitHub リポジトリを連携
-3. 環境変数 `NEXT_PUBLIC_NATURE_REMO_API_TOKEN` を設定
+3. 環境変数 `NATURE_REMO_API_TOKEN` を設定
 4. デプロイ
 
 ### その他のプラットフォーム
