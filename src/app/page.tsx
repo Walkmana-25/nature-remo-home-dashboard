@@ -1,6 +1,6 @@
 'use client';
 
-import { Clock } from '@/components/Clock';
+import Clock from '@/components/Clock';
 import { RoomCard } from '@/components/RoomCard';
 import { HistoryChart } from '@/components/HistoryChart';
 import { useNatureRemoData } from '@/hooks/useNatureRemoData';
@@ -19,9 +19,14 @@ export default function Home() {
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* ヘッダー */}
         <header className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 text-center">
-            Nature Remo ホームダッシュボード
-          </h1>
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+              Nature Remo ホームダッシュボード
+            </h1>
+            <a href="/kiosk" className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md font-medium transition-colors">
+              Kiosk Mode
+            </a>
+          </div>
           <Clock />
         </header>
 
