@@ -4,8 +4,20 @@ import { useState, useEffect, useCallback } from 'react';
 import { RoomData } from '@/types/nature-remo';
 import { generateMockRoomData } from '@/lib/nature-remo-client';
 
-// ポーリング間隔（5分 = 300,000ミリ秒）
-const POLLING_INTERVAL_MS = 5 * 60 * 1000;
+// デフォルトポーリング間隔（5分 = 300,000ミリ秒）
+const DEFAULT_POLLING_INTERVAL_MS = 5 * 60 * 1000;
+
+/**
+ * ポーリング間隔を環境変数から取得（ミリ秒単位）
+ * NEXT_PUBLIC_POLLING_INTERVAL_MS が設定されていればそれを使用、なければデフォルト値
+ */
+export const POLLING_INTERVAL_MS = (() => {
+  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_POLLING_INTERVAL_MS) {
+    const parsed = Number.parseInt(process.env.NEXT_PUBLIC_POLLING_INTERVAL_MS, 10);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_POLLING_INTERVAL_MS;
+  }
+  return DEFAULT_POLLING_INTERVAL_MS;
+})();
 
 /**
  * Nature Remo データを取得するカスタムフック
@@ -27,12 +39,9 @@ export function useNatureRemoData() {
         cache: 'no-store',
       });
       
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status} ${response.statusText}`);
-      }
-      
       const data = await response.json();
       
+      // レスポンスステータスに関わらず、useMockフラグでモックデータを使用するか判定
       if (data.useMock) {
         // モックデータを使用
         console.log('Using mock data (API token not configured or error occurred)');
@@ -57,7 +66,7 @@ export function useNatureRemoData() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, []); // setState関数は安定しているため依存配列は空でOK
 
   useEffect(() => {
     // 初回データ取得

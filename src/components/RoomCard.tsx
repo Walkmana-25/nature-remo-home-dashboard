@@ -27,7 +27,9 @@ export function RoomCard({ room }: RoomCardProps) {
               <span className="text-sm text-gray-600 dark:text-gray-400">温度</span>
             </div>
             <span className="text-2xl font-bold text-red-600 dark:text-red-400 tabular-nums">
-              {room.temperature.toFixed(1)}°C
+              {(typeof room.temperature === 'number' && !isNaN(room.temperature) 
+                ? room.temperature 
+                : 0).toFixed(1)}°C
             </span>
           </div>
         )}
@@ -40,7 +42,9 @@ export function RoomCard({ room }: RoomCardProps) {
               <span className="text-sm text-gray-600 dark:text-gray-400">湿度</span>
             </div>
             <span className="text-2xl font-bold text-blue-600 dark:text-blue-400 tabular-nums">
-              {room.humidity.toFixed(1)}%
+              {(typeof room.humidity === 'number' && !isNaN(room.humidity) 
+                ? room.humidity 
+                : 0).toFixed(1)}%
             </span>
           </div>
         )}
@@ -53,7 +57,9 @@ export function RoomCard({ room }: RoomCardProps) {
               <span className="text-sm text-gray-600 dark:text-gray-400">照度</span>
             </div>
             <span className="text-2xl font-bold text-yellow-600 dark:text-yellow-400 tabular-nums">
-              {room.illumination.toFixed(0)}
+              {(typeof room.illumination === 'number' && !isNaN(room.illumination) 
+                ? room.illumination 
+                : 0).toFixed(0)}
             </span>
           </div>
         )}

@@ -14,7 +14,7 @@ export async function GET() {
       // APIトークンが設定されていない場合はモックデータを返す
       return NextResponse.json({
         useMock: true,
-        devices: [],
+        roomData: [],
       });
     }
     
@@ -33,6 +33,6 @@ export async function GET() {
     return NextResponse.json({
       useMock: true,
       error: error instanceof Error ? error.message : 'データの取得に失敗しました',
-    }, { status: 200 }); // クライアント側でモックデータにフォールバックできるように200を返す
+    }, { status: 500 }); // エラー時は適切なHTTPステータスを返す
   }
 }
