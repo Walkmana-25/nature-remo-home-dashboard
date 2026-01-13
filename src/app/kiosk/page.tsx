@@ -1,3 +1,5 @@
+'use client';
+
 import type { NextPage } from 'next';
 import Clock from '@/components/Clock';
 import Temperature from '@/components/Temperature';

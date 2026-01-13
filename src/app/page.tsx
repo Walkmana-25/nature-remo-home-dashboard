@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import Clock from '@/components/Clock';
 import { RoomCard } from '@/components/RoomCard';
 import { HistoryChart } from '@/components/HistoryChart';
@@ -23,9 +24,14 @@ export default function Home() {
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
               Nature Remo ホームダッシュボード
             </h1>
-            <a href="/kiosk" className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md font-medium transition-colors">
+            <Link
+              href="/kiosk"
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md font-medium transition-colors"
+              aria-label="Open kiosk mode display"
+              title="Open kiosk mode display"
+            >
               Kiosk Mode
-            </a>
+            </Link>
           </div>
           <Clock />
         </header>
