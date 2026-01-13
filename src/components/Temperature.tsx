@@ -21,11 +21,11 @@ const Temperature = () => {
     );
   }
 
-  const temperature = roomData.length > 0 ? roomData[0].temperature : null;
+  const temperature = roomData.length > 0 ? roomData[0].temperature : undefined;
 
   return (
     <div className="flex items-center justify-center h-full">
-      {temperature !== null ? (
+      {typeof temperature === 'number' ? (
         <h2 className="text-8xl font-bold">{temperature.toFixed(1)}°C</h2>
       ) : (
         <p className="text-4xl">No data</p>
