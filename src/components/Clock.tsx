@@ -8,7 +8,11 @@ import { ja } from 'date-fns/locale';
  * 現在時刻を表示するコンポーネント
  * 年月日、時分秒、曜日を日本語で表示
  */
-export function Clock() {
+interface ClockProps {
+  size?: 'small' | 'large';
+}
+
+export default function Clock({ size = 'small' }: ClockProps) {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -18,6 +22,14 @@ export function Clock() {
 
     return () => clearInterval(timer);
   }, []);
+
+  if (size === 'large') {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <h1 className="text-9xl font-bold">{format(currentTime, 'HH:mm:ss')}</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center space-y-2 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-md">
