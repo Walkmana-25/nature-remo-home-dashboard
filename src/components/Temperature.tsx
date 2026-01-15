@@ -23,11 +23,7 @@ const Temperature = () => {
 
   const firstRoom = roomData.length > 0 ? roomData[0] : undefined;
   const temperature = typeof firstRoom?.temperature === 'number' ? firstRoom.temperature : undefined;
-  const roomName = firstRoom && typeof (firstRoom as any).name === 'string'
-    ? (firstRoom as any).name
-    : roomData.length > 0
-    ? 'Room 1'
-    : undefined;
+  const roomName = firstRoom?.name ?? (roomData.length > 0 ? 'Room 1' : undefined);
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
